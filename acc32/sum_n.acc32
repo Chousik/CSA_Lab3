@@ -1,0 +1,47 @@
+    .data
+input_addr:      .word  0x80               ;input address
+output_addr:     .word  0x84               ;output address
+buffer:          .word  0x0                ;var for buffer
+divides:         .word  0x2                ;divisor for the formula
+one:             .word  0x1                ;magic number
+bad_result:      .word  -1                 ;value for bad input
+bad_result_2:    .word  0xCCCCCCCC         ;value for overflow
+
+    .text
+_start:
+    load_ind     input_addr                  ;load n
+    store        buffer                      ;save n to buffer
+    bgt          main                        ;jump if the number is valid
+    jmp          bad_input                   ;other situation
+
+main:
+    load         buffer
+    rem          divides
+    bnez         buffer_odd                  ;n odd check for overflow
+
+buffer_even:
+    load         buffer                      ;load n
+    add          one                         ;make odd part
+    store        buffer                      ;save odd part of the formula
+    sub          one                         ;make even part
+    div          divides                     ;divide odd to avoid overflow
+    jmp          end
+
+buffer_odd:
+    load         buffer                      ; load n
+    add          one                         ;make odd part
+    div          divides                     ;divide odd to avoid overflow
+end:
+    mul          buffer                      ;multiplication overflow check
+    bvs          bad_end                     ;if overflow jmp bad_end
+    store_ind    output_addr                 ;other save output_addr
+    halt
+
+bad_input:
+    load         bad_result                  ;case bad input
+    store_ind    output_addr
+    halt
+bad_end:
+    load         bad_result_2                ;case overflow
+    store_ind    output_addr
+    halt
