@@ -1,68 +1,68 @@
     .data
 
-    input_addr:      .word  0x80
-output_addr:     .word  0x84
+input_addr:      .word  0x80               ; Input address where the number 'n' is stored
+output_addr:     .word  0x84               ; Output address where the result should be stored
 
     .text
-.org 0x90
+
+    .org     0x90
 
 _start:
-    jal ra, main
+    jal      ra, main
     halt
 
 main:
-    addi  sp, sp, -4
-    sw   ra, 0(sp)
+    addi     sp, sp, -4
+    sw       ra, 0(sp)
 
-    jal ra, data_load
-    jal ra, count_ones
-    jal ra, data_save
-    j ret
+    jal      ra, data_load
+    jal      ra, count_ones
+    jal      ra, data_save
+    j        ret
 
 count_ones:
-     addi  sp, sp, -4
-     sw   ra, 0(sp)
-     xor t0, t0, t0
-     xor t1, t1, t1
-     xor t3, t3, t3
-     addi t0, t0, 32
-     mv t1, a0
-     xor t2, t2, t2
-     xor t4, t4, t4
-     addi t4, t4, 1
+    addi     sp, sp, -4
+    sw       ra, 0(sp)
+
+    xor      t0, t0, t0
+    addi     t0, t0, 32
+    mv       t1, a0
+    addi     t4, t4, 1
 
 for_loop:
-    and t3, t1, t4
-    add t2, t2, t3
-    sra t1, t1, t4
-    addi t0, t0, -1
-    beqz t0, end_loop
-    j for_loop
+    and      t3, t1, t4                      ;for i=0, 32: t2+=t1[i]
+    add      t2, t2, t3
+    sra      t1, t1, t4
+    addi     t0, t0, -1
+    beqz     t0, end_loop
+    j        for_loop
 end_loop:
-    mv a0, t2
-    j ret
+    mv       a0, t2                          ;mov to return register
+    j        ret
 
 data_load:
-    addi  sp, sp, -4
-    sw   ra, 0(sp)
+    addi     sp, sp, -4
+    sw       ra, 0(sp)
 
-    lui     t0, %hi(input_addr)
-    addi    t0, t0, %lo(input_addr)
-    lw t0, 0(t0)
-    lw a0, 0(t0)
-    j ret
+    lui      t0, %hi(input_addr)
+    addi     t0, t0, %lo(input_addr)
+    lw       t0, 0(t0)
+    lw       a0, 0(t0)
+
+    j        ret
 
 data_save:
-    addi  sp, sp, -4
-    sw   ra, 0(sp)
+    addi     sp, sp, -4
+    sw       ra, 0(sp)
 
     lui      t0, %hi(output_addr)
     addi     t0, t0, %lo(output_addr)
-    lw t0, 0(t0)
-    sw a0, 0(t0)
+    lw       t0, 0(t0)
+    sw       a0, 0(t0)
 
-    j ret
+    j        ret
 ret:
-  lw        ra, 0(sp)
-  addi      sp, sp, 4
-  jr        ra
+    lw       ra, 0(sp)
+    addi     sp, sp, 4
+    jr       ra
+;https://wrench.edu.swampbuds.me/result/589e38c7-1797-48cf-9f8f-8d7827a8a4b6
