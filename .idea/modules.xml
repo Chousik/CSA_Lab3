@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Lab3_CSA.iml" filepath="$PROJECT_DIR$/Lab3_CSA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RISC-V.tmbundle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/RISC-V.tmbundle.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RISC-V.tmbundle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/RISC-V.tmbundle.test.iml" />
     </modules>
   </component>
 </project>

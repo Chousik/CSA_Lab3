@@ -5,7 +5,7 @@ buffer:          .word  0x0                ;var for buffer
 divides:         .word  0x2                ;divisor for the formula
 one:             .word  0x1                ;magic number
 bad_result:      .word  -1                 ;value for bad input
-bad_result_2:    .word  0xCCCCCCCC         ;value for overflow
+bad_overflow:    .word  0xCCCCCCCC         ;value for overflow
 
     .text
 _start:
@@ -31,6 +31,7 @@ buffer_odd:
     load         buffer                      ; load n
     add          one                         ;make odd part
     div          divides                     ;divide odd to avoid overflow
+
 end:
     mul          buffer                      ;multiplication overflow check
     bvs          bad_end                     ;if overflow jmp bad_end
@@ -41,7 +42,9 @@ bad_input:
     load         bad_result                  ;case bad input
     store_ind    output_addr
     halt
+
 bad_end:
-    load         bad_result_2                ;case overflow
+    load         bad_overflow                ;case overflow
     store_ind    output_addr
     halt
+

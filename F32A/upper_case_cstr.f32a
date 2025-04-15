@@ -1,0 +1,88 @@
+.data
+buffer: .byte '________________________________'
+input_addr: .word 0x80
+output_addr: .word 0x84
+
+symbol_a: .byte 'a'
+symbol_z: .byte 'z'
+symbol_end: .word 0xA
+mask: .word 0xFF
+mask_save: .byte 0, 0, '___'
+diff: .word 0x20
+one: .word 0x1
+zero: .word 0x0
+max_count: .word 0x20
+max_length_error_value: .word 0xCCCCCCCC
+
+free_mem: .byte '..........................................................................'
+
+.text
+_start:
+main:
+    up_str
+    print_str
+    halt
+
+up_str:
+    lit buffer
+    a!
+    @p input_addr b!
+    @p max_count
+    >r
+in_loop:
+    next body_loop
+    max_length_error ;
+body_loop:
+    @b
+    up_if_lower_case
+    @p mask and
+    dup
+    @p symbol_end
+    inv @p one + +
+    if clear_return
+    @p mask_save +
+    !+
+    in_loop ;
+
+up_if_lower_case:
+    dup
+    @p symbol_z @p mask and
+    inv @p one + +
+    -if return
+    dup
+    @p symbol_a @p mask and
+    inv @p one + +
+    -if up
+    return ;
+
+clear_return:
+    r>
+    return ;
+up:
+    @p diff inv
+    @p one
+    + +
+    return ;
+
+print_str:
+    lit buffer a!
+    @p output_addr b!
+in_loop_print:
+    @+
+    dup
+    -if loop_print
+    return ;
+loop_print:
+    @p mask and
+    !b
+    in_loop_print ;
+
+
+max_length_error:
+    @p output_addr a!
+    @p max_length_error_value
+    !
+    halt
+
+return:
+    ;

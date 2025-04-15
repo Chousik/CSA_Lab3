@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="RISC-V.tmbundle" target="17" />
+      <module name="RISC-V.tmbundle.main" target="17" />
+      <module name="RISC-V.tmbundle.test" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

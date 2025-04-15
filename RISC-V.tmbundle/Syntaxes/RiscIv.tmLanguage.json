@@ -1,0 +1,54 @@
+{
+  "name": "RiscIv",
+  "scopeName": "source.risciv",
+  "fileTypes": [
+    "risciv"
+  ],
+  "patterns": [
+    {
+      "match": "^\\s*[A-Za-z_][\\w]*:",
+      "name": "entity.name.label.risciv"
+    },
+    {
+      "match": "\\.(data|text|word|globl)",
+      "name": "storage.type.directive.risciv"
+    },
+    {
+      "match": "\\b(lui|mv|sw|sb|lw)\\b",
+      "name": "keyword.control.risciv.data"
+    },
+    {
+      "match": "\\b(addi|add|sub|mul|mulh|div|rem)\\b",
+      "name": "keyword.control.risciv.arithmetic"
+    },
+    {
+      "match": "\\b(sll|srl|sra|and|or|xor)\\b",
+      "name": "keyword.control.risciv.bitwise"
+    },
+    {
+      "match": "\\b(j|jal|jr|beqz|bnez|bgt|ble|bgtu|bleu|beq|bne|halt)\\b",
+      "name": "keyword.control.risciv.flow"
+    },
+    {
+      "match": "%hi\\([^)]+\\)|%lo\\([^)]+\\)",
+      "name": "variable.parameter.risciv.immediate"
+    },
+    {
+      "match": ";.*$",
+      "name": "comment.line.semicolon.risciv"
+    },
+    {
+      "match": "\\b0x[0-9a-fA-F]+\\b",
+      "name": "constant.numeric.hex.risciv"
+    },
+    {
+      "match": "\\b\\d+\\b",
+      "name": "constant.numeric.decimal.risciv"
+    },
+    {
+      "match": "\\b(zero|ra|sp|gp|tp|t0|t1|t2|s0fp|s1|a0|a1|a2|a3|a4|a5|a6|a7|s2|s3|s4|s5|s6|s7|s8|s9|s10|s11|t3|t4|t5|t6)\\b",
+      "name": "variable.language.register.risciv"
+    }
+  ],
+  "uuid": "risciv-tm-language-uuid"
+}
