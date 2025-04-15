@@ -70,8 +70,8 @@ print_str:
 in_loop_print:
     @+
     dup
-    -if loop_print
-    return ;
+    @p mask and
+    if return
 loop_print:
     @p mask and
     !b
@@ -86,3 +86,4 @@ max_length_error:
 
 return:
     ;
+    /https://wrench.edu.swampbuds.me/result/b1137092-3b0d-4ae6-ba27-a901931f8926
